@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BookOpen, CheckCircle, Award } from 'lucide-react';
 
 const modules = [
@@ -958,7 +958,19 @@ const modules = [
   }
 ];
   export default function App() {
-  const [activeModule, setActiveModule] = useState(0);
+    const [activeModule, setActiveModule] = useState(() => {
+    const savedId = localStorage.getItem('algebra_active_topic');
+    if (savedId) {
+      const index = modules.findIndex(m => m.id === parseInt(savedId, 10));
+      return index !== -1 ? index : 0;
+    }
+    return 0;
+  });
+    useEffect(() => {
+    if (modules[activeModule]) {
+      localStorage.setItem('algebra_active_topic', modules[activeModule].id);
+    }
+  }, [activeModule]);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [showResult, setShowResult] = useState(false);
 
