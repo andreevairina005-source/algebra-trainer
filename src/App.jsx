@@ -1003,7 +1003,12 @@ const modules = [
         {modules.map((m, i) => (
           <button
             key={m.id}
-            onClick={() => { setActiveModule(i); setSelectedAnswers({}); setShowResult(false); }}
+                              onClick={() => { 
+                    setActiveModule(i); 
+                    setSelectedAnswers({}); 
+                    setShowResult(false); 
+                    window.scrollTo(0, 0); 
+                  }}
             className={`text-left p-3 rounded-lg transition-colors ${activeModule === i ? 'bg-blue-600 text-white' : 'hover:bg-slate-700 text-slate-300'}`}
           >
             {m.title}
