@@ -1,136 +1,134 @@
-import React, { useState, useEffect } from 'react';
-import { BookOpen, CheckCircle, Award, Menu, X } from 'lucide-react';
+import React, { useState } from 'react';
+import { Circle, Award, Menu, X } from 'lucide-react';
 
 const modules = [
   {
     id: 1,
     title: "§ 1. Числовые выражения",
-    rule: "Числовые выражения составляются из чисел с помощью знаков действий и скобок. Число, которое получается в результате выполнения действий в числовом выражении, называют значением выражения. Если в выражении встречается деление на нуль, то это выражение не имеет значения (не имеет смысла).",
+    rule: "Числовые выражения составляются из чисел с помощью знаков действий и скобок. Число, которое получается в результате выполнения действий в числовом выражении, называют значением выражения.",
     example: {
       task: "Примеры из учебника:",
       steps: [
-        "1) Туристы в течение двух часов ехали на велосипедах по шоссе со скоростью 16 км/ч, а затем шли лесом еще 7 км. По шоссе они проехали 16·2 км, а лесом прошли 7 км. Длина маршрута: (16·2+7) км, т.е. 39 км.",
-        "2) Найдем значение выражения 96 — 2·6². Сначала выполняем возведение в степень, затем умножение и вычитание: 1) 6² = 36; 2) 2·36 = 72; 3) 96 — 72 = 24.",
-        "3) Выражение 35:(4·2—8) не имеет смысла, так как 4·2—8 = 0, а на нуль делить нельзя."
+        "Туристы в течение двух часов ехали на велосипедах по шоссе со скоростью 16 км/ч, а затем шли лесом еще 7 км. По шоссе они проехали 16 · 2 км, а лесом 7 км. Весь путь равен 16 · 2 + 7 (км).",
+        "Найдем значение выражения 96 − 2·6². Сначала выполняем возведение в степень, затем умножение и вычитание: 1) 6² = 36; 2) 2·36 = 72; 3) 96 − 72 = 24.",
+        "Выражение 35:(4·2−8) не имеет смысла, так как 4·2−8 = 0, а на нуль делить нельзя."
       ]
     },
     quiz: [
-      { question: "Найдите значение выражения: 43 : 5", options: ["8,6", "8", "9", "8,5"], correct: 0 },
-      { question: "Вычислите: 9,6 — 3 · 1,2", options: ["6", "5,4", "6,2", "4,8"], correct: 0 },
-      { question: "Вычислите: 5 · (7,4 — 6,1)", options: ["6,5", "5,5", "7,5", "6,1"], correct: 0 },
-      { question: "Не имеет смысла выражение:", options: ["35 : (4·2—8)", "15 : (2+3)", "0 · 45", "10 - 2"], correct: 0 },
-      { question: "Найдите значение: 6,965 + 23,3", options: ["30,265", "29,265", "30,125", "31,265"], correct: 0 },
-      { question: "Вычислите: 50,4 - 6,98", options: ["43,42", "43,58", "44,42", "43,52"], correct: 0 },
-      { question: "Найдите значение: 96 - 2 · 6²", options: ["24", "48", "84", "12"], correct: 0 },
-      { question: "ЗАДАЧА (№ 12): Из двух населенных пунктов, расстояние между которыми 40 км, вышли одновременно навстречу друг другу два пешехода. Скорость одного 4 км/ч, другого 5 км/ч. Какое расстояние будет между ними через 3 ч?", options: ["13 км", "27 км", "15 км", "12 км"], correct: 0 },
-      { question: "ЗАДАЧА (№ 13): Один рабочий изготовляет за час 7 деталей, а другой 9 деталей. Сколько деталей они изготовят за 4 ч?", options: ["64", "32", "63", "28"], correct: 0 },
-      { question: "ЗАДАЧА (№ 16): Найдите 150% числа 240.", options: ["360", "120", "240", "400"], correct: 0 }
+      { question: "Запишите в виде выражения: сумму числа 35 и произведения чисел 18 и 24.", options: ["35 + 18 · 24", "(35 + 18) · 24", "35 · 18 + 24", "35 + (18 + 24)"], correct: 0 },
+      { question: "Запишите в виде выражения: разность произведения чисел 47 и 8 и произведения чисел 39 и 6.", options: ["47 · 8 - 39 · 6", "47 · (8 - 39) · 6", "(47 - 39) · (8 - 6)", "47 · 8 + 39 · 6"], correct: 0 },
+      { question: "Выясните, имеет ли смысл выражение: (15 - 5) : (3,2 - 4 · 0,8).", options: ["Не имеет смысла, так как знаменатель равен 0", "Имеет смысл, значение равно 10", "Имеет смысла, значение равно 0", "Не имеет смысла, так как делить на 0 нельзя"], correct: 0 },
+      { question: "Найдите значение выражения: (12,5 : 0,5) + (4,8 + 2,7).", options: ["32,5", "30,5", "25,0", "35,0"], correct: 0 },
+      { question: "Сравните значения выражений: 7,8 · 1,4 и 8,9 · 1,2.", options: ["7,8 · 1,4 > 8,9 · 1,2", "7,8 · 1,4 < 8,9 · 1,2", "7,8 · 1,4 = 8,9 · 1,2", "Сравнить нельзя"], correct: 0 },
+      { question: "Сравните значения выражений: 0,98 - 0,55 и 0,98 + 0,55.", options: ["0,98 - 0,55 < 0,98 + 0,55", "0,98 - 0,55 > 0,98 + 0,55", "0,98 - 0,55 = 0,98 + 0,55", "Сравнить нельзя"], correct: 0 },
+      { question: "ЗАДАЧА (по типу № 47): Периметр треугольника 24 см. Две его стороны равны между собой, а третья, меньшая, сторона равна 6 см. Какова длина равных сторон?", options: ["9 см", "12 см", "6 см", "8 см"], correct: 0 },
+      { question: "ЗАДАЧА (по типу № 47): Из города А в город В выехали одновременно мотоциклист и автомобилист. Скорость мотоцикла 70 км/ч, а скорость автомобиля 90 км/ч. Какое расстояние будет между ними через 3 ч?", options: ["60 км", "480 км", "210 км", "270 км"], correct: 0 },
+      { question: "Верно ли равенство: 16 · 3 = 180 : 4 + 3?", options: ["Нет, 48 ≠ 48", "Да, 48 = 48", "Нет, 48 ≠ 45", "Да, 48 = 51"], correct: 0 },
+      { question: "Верно ли неравенство: 4,5 · 2 > 10,2 - 2,1?", options: ["Да, 9 > 8,1", "Нет, 9 < 8,1", "Да, 9 = 8,1", "Нет, 9 ≠ 8,1"], correct: 0 }
     ]
   },
   {
     id: 2,
     title: "§ 2. Выражения с переменными",
-    rule: "Букву в выражении называют переменной, а само выражение — выражением с переменной. Если в выражение с переменными подставить вместо каждой переменной какое-либо ее значение, то получится числовое выражение. Его значение называют значением выражения с переменными.",
+    rule: "Букву в выражении называют переменной, а само выражение — выражением с переменной. Если в выражение с переменными подставить вместо букв их значения, то получится числовое выражение.",
     example: {
       task: "Объяснение из учебника:",
       steps: [
-        "1) Двигаясь со скоростью 60 км/ч, автомобиль за t ч пройдет 60t км. Букву t называют переменной, а выражение 60t — выражением с переменной.",
-        "2) Если t = 4, то 60 · 4 = 240 (км). Число 240 есть значение выражения 60t при t = 4.",
-        "3) Пусть длины сторон прямоугольника равны a см и b см. Тогда его площадь равна ab см². Если a = 8 и b = 11, то ab = 8·11 = 88."
+        "Двигаясь со скоростью 60 км/ч, автомобиль за t ч пройдет 60t км. Букву t называют переменной, а выражение 60t — выражением с переменной.",
+        "Если t = 4, то 60t = 60 · 4 = 240 (км). Число 240 — значение выражения 60t при t = 4.",
+        "Найдем значение выражения a + b при a = 5, b = 3: 5 + 3 = 8."
       ]
     },
     quiz: [
-      { question: "Найдите значение выражения 4x — 12 при x = 7", options: ["16", "28", "12", "40"], correct: 0 },
-      { question: "Найдите значение выражения 2,8 — 0,5y при y = 3", options: ["1,3", "1,8", "2,3", "0,3"], correct: 0 },
-      { question: "При каком значении x выражение 18/x не имеет смысла?", options: ["x = 0", "x = 1", "x = 18", "x = -18"], correct: 0 },
-      { question: "При каком значении b выражение 1/(b-7) не имеет смысла?", options: ["b = 7", "b = 0", "b = 1", "b = -7"], correct: 0 },
-      { question: "Запишите формулу четного числа m.", options: ["m = 2n", "m = 2n + 1", "m = n/2", "m = 3n"], correct: 0 },
-      { question: "Найдите значение выражения 5m - 3n при m = 2/5, n = 2/3", options: ["0", "-2", "2", "1"], correct: 0 },
-      { question: "Найдите значение выражения 1/2x - y, если x = 2,4, y = 0,8", options: ["0,4", "0,8", "-0,4", "1,2"], correct: 0 },
-      { question: "ЗАДАЧА (№ 32): В классе 35 учеников. Каждый из них получил бесплатно учебники по математике стоимостью 0,55 р. и остальные учебники общей стоимостью n р. Сколько денег было израсходовано, чтобы обеспечить этот класс учебниками? (При n = 50)", options: ["69,25", "19,25", "50,55", "60"], correct: 0 },
-      { question: "ЗАДАЧА (№ 31): Длина прямоугольника a см, ширина b см. Что означает выражение a + 2b?", options: ["Половина периметра", "Площадь", "Периметр", "Разность сторон"], correct: 0 },
-      { question: "ЗАДАЧА: Скорость автомобиля 60 км/ч. Запишите выражение для пути за t часов.", options: ["60t", "60/t", "60 + t", "t/60"], correct: 0 }
+      { question: "Найдите значение выражения 3a - 2b при a = 5, b = -2.", options: ["19", "11", "13", "-19"], correct: 0 },
+      { question: "Найдите значение выражения (x + 3y) : 2 при x = 7, y = 1.", options: ["5", "10", "4", "6"], correct: 0 },
+      { question: "Известно, что скорость грузовой машины 50 км/ч. Какое расстояние она пройдёт за t часов? (Составьте выражение)", options: ["50t", "50 + t", "t : 50", "50 - t"], correct: 0 },
+      { question: "Ширина прямоугольника b см, а длина в 3 раза больше. Чему равна длина? (Составьте выражение)", options: ["3b", "b + 3", "b : 3", "b - 3"], correct: 0 },
+      { question: "Ширина прямоугольника b см, длина 3b см. Что означает выражение 2(b + 3b)?", options: ["Периметр прямоугольника", "Площадь прямоугольника", "Разность сторон", "Сумму сторон"], correct: 0 },
+      { question: "Найдите значение выражения a² - 3b при a = 4, b = 2.", options: ["10", "4", "8", "-10"], correct: 0 },
+      { question: "При каком значении x выражение 5x - 15 равно 0?", options: ["3", "-3", "0", "15"], correct: 0 },
+      { question: "ЗАДАЧА (по типу № 21): В классе m мальчиков, а девочек на 4 больше. Сколько девочек в классе? (Составьте выражение)", options: ["m + 4", "m - 4", "4m", "m : 4"], correct: 0 },
+      { question: "ЗАДАЧА (по типу № 22): В первой коробке x карандашей, а во второй — в 2 раза меньше. Сколько карандашей в двух коробках вместе? (Составьте выражение)", options: ["x + x : 2", "x + 2x", "2x - x", "x · 2"], correct: 0 },
+      { question: "ЗАДАЧА (по типу № 23): Турист прошёл 5 км, а затем ещё t часов со скоростью 4 км/ч. Какой путь он прошёл? (Составьте выражение)", options: ["5 + 4t", "5 · 4t", "(5 + 4)t", "5t + 4"], correct: 0 }
     ]
   },
   {
     id: 3,
     title: "§ 3. Сравнение значений выражений",
-    rule: "Для любых двух числовых выражений можно установить, равны их значения или нет, и если они не равны, то какое из них больше и какое меньше. Если выражения содержат переменные, то для разных значений переменных результат сравнения значений этих выражений может оказаться различным.",
+    rule: "Из двух чисел больше то, которое на координатной прямой располагается правее. Сравнить два выражения — значит выяснить, какое из них больше, меньше или равны ли они.",
     example: {
-      task: "Задача из учебника:",
+      task: "Примеры из учебника:",
       steps: [
-        "1) Колхоз засеял пшеницей два опытных участка площадью 48 и 60 га. С первого собрали 1800 ц, а со второго 2100 ц. На каком участке урожайность выше?",
-        "2) Урожайность выражается частным от деления массы пшеницы на площадь участка.",
-        "3) Сравним значения выражений 1800:48 и 2100:60. Так как 1800:48 = 37,5, а 2100:60 = 35, то 1800:48 > 2100:60.",
-        "4) Значит, урожайность выше на первом участке."
+        "Сравним значения выражений 5,6 и 5,4. Так как 5,6 правее на координатной прямой, то 5,6 > 5,4.",
+        "Сравним 7,8 · 1,4 и 8,9 · 1,2. 7,8 · 1,4 = 10,92; 8,9 · 1,2 = 10,68. Значит, 7,8 · 1,4 > 8,9 · 1,2.",
+        "Если a > b, то разность a - b положительна, а b - a отрицательна."
       ]
     },
     quiz: [
-      { question: "Сравните значения выражений: 2,06 - 3,05 и 21,28 : 3,5", options: ["<", ">", "="], correct: 0 },
-      { question: "Сравните: 97,2 : 2,4 и 62 - 21,6", options: ["<", ">", "="], correct: 0 },
-      { question: "Сравните значения выражений при a = -20: 2a - 7 и 3a + 4", options: [">", "<", "="], correct: 0 },
-      { question: "Верно ли неравенство: 2 1/2 : 3/4 - 2 1/3 > (1 1/2 - 1 1/3) · 4", options: ["Да", "Нет"], correct: 0 },
-      { question: "Верно ли, что 8,1 < 8,14 < 8,6?", options: ["Да", "Нет"], correct: 0 },
-      { question: "Сравните: 56 · 2/7 и 56 : 7/2", options: ["<", ">", "="], correct: 2 },
-      { question: "Верно ли неравенство: -7,62 + 3,38 < 4,2 - 7,31?", options: ["Да", "Нет"], correct: 0 },
-      { question: "ЗАДАЧА (№ 18): За несколько книг уплатили 5,2 р. Стоимость одной составила 30%, а другой 45% израсходованных денег. На сколько копеек первая книга дешевле второй?", options: ["78 коп.", "85 коп.", "72 коп.", "80 коп."], correct: 0 },
-      { question: "ЗАДАЧА (№ 19): Площадь участка поля 80 га. Первый тракторист вспахал 40% этого участка, а второй 60% оставшейся части. Кто из них вспахал больше и на сколько?", options: ["Первый, на 3,2 га", "Второй, на 3,2 га", "Одинаково"], correct: 0 },
-      { question: "ЗАДАЧА (№ 20): Колхоз собирал с каждого гектара 44 ц пшеницы. Применив интенсивную технологию, он увеличил производство на 25%. Сколько центнеров пшеницы с гектара стал собирать колхоз?", options: ["55", "69", "50", "60"], correct: 0 }
+      { question: "Сравните значения выражений: 7,4 · 1,2 и 7,8 · 1,1.", options: ["7,4 · 1,2 < 7,8 · 1,1", "7,4 · 1,2 > 7,8 · 1,1", "7,4 · 1,2 = 7,8 · 1,1", "Сравнить нельзя"], correct: 0 },
+      { question: "Сравните значения выражений: 0,85 - 0,35 и 0,85 + 0,35.", options: ["0,85 - 0,35 < 0,85 + 0,35", "0,85 - 0,35 > 0,85 + 0,35", "0,85 - 0,35 = 0,85 + 0,35", "Сравнить нельзя"], correct: 0 },
+      { question: "Сравните значения выражений, не производя вычислений: 2,4 · 1,1 и 2,4 : 0,9.", options: ["2,4 · 1,1 < 2,4 : 0,9", "2,4 · 1,1 > 2,4 : 0,9", "2,4 · 1,1 = 2,4 : 0,9", "Сравнить нельзя"], correct: 0 },
+      { question: "Сравните значения выражений, не производя вычислений: 5,2 · (-0,4) и 5,2 : (-0,4).", options: ["5,2 · (-0,4) < 5,2 : (-0,4)", "5,2 · (-0,4) > 5,2 : (-0,4)", "5,2 · (-0,4) = 5,2 : (-0,4)", "Сравнить нельзя"], correct: 0 },
+      { question: "Известно, что a > b. Сравните a - 4 и b - 4.", options: ["a - 4 > b - 4", "a - 4 < b - 4", "a - 4 = b - 4", "Сравнить нельзя"], correct: 0 },
+      { question: "Запишите в виде двойного неравенства: «число 12,3 больше 10, но меньше 15».", options: ["10 < 12,3 < 15", "12,3 < 10 < 15", "10 < 15 < 12,3", "15 > 12,3 > 10"], correct: 0 },
+      { question: "ЗАДАЧА (по типу № 66): Сравните значения выражений 3x - 5 и 2x + 1 при x = 4.", options: ["3x - 5 < 2x + 1", "3x - 5 > 2x + 1", "3x - 5 = 2x + 1", "Сравнить нельзя"], correct: 0 },
+      { question: "ЗАДАЧА (по типу № 70): Сравните значения выражений 4a + 3 и 3a - 2 при a = -5.", options: ["4a + 3 < 3a - 2", "4a + 3 > 3a - 2", "4a + 3 = 3a - 2", "Сравнить нельзя"], correct: 0 },
+      { question: "ЗАДАЧА (по типу № 74): Известно, что a < b. Сравните a + 7 и b + 7.", options: ["a + 7 < b + 7", "a + 7 > b + 7", "a + 7 = b + 7", "Сравнить нельзя"], correct: 0 },
+      { question: "ЗАДАЧА (по типу № 77): Сравните значения выражений 5 - 2x и 3 - 2x при любом x.", options: ["5 - 2x > 3 - 2x", "5 - 2x < 3 - 2x", "5 - 2x = 3 - 2x", "Сравнить нельзя"], correct: 0 }
     ]
   },
   {
     id: 4,
     title: "§ 4. Тождества",
-    rule: "Равенство, верное при любых значениях переменных, называется тождеством. Тождествами считают и верные числовые равенства. К тождествам относятся, например, равенства, выражающие основные свойства действий над числами.",
+    rule: "Равенство, верное при любых значениях входящих в него переменных, называют тождеством. Выражения, у которых значения равны при любых значениях переменных, называют тождественно равными.",
     example: {
-      task: "Рассмотрим пример из учебника:",
+      task: "Примеры из учебника:",
       steps: [
-        "Найдем значения выражений 3(x+y) и 3x+3y при x=5, y=4:",
-        "1) 3(x + y) = 3(5 + 4) = 3·9 = 27",
-        "2) 3x + 3y = 3·5 + 3·4 = 15 + 12 = 27",
-        "Мы получили один и тот же результат. Так как значения выражений равны при любых значениях переменных, эти выражения называются тождественно равными.",
-        "А равенство 3(x+y) = 3x+3y называется тождеством."
+        "Равенство a + b = b + a является тождеством (переместительное свойство сложения).",
+        "Равенство a(b + c) = ab + ac является тождеством (распределительное свойство).",
+        "Выражения 3x и 2x + x тождественно равны, так как при любом x их значения совпадают."
       ]
     },
     quiz: [
-      { question: "Какое из данных равенств является тождеством?", options: ["a(b + c) = ab + ac", "2x + y = 2xy", "x + 3 = 5", "a - b = b - a"], correct: 0 },
-      { question: "Является ли тождеством равенство a + 0 = a?", options: ["Да", "Нет"], correct: 0 },
-      { question: "Является ли тождеством равенство a · (-b) = -ab?", options: ["Да", "Нет"], correct: 0 },
-      { question: "Является ли тождеством равенство (-a)(-b) = ab?", options: ["Да", "Нет"], correct: 0 },
-      { question: "Укажите, на основании каких свойств тождественно равны выражения: 2x + 3 и 3 + 2x", options: ["Переместительное", "Сочетательное", "Распределительное"], correct: 0 },
-      { question: "Является ли тождеством равенство 5y - 15 = 5(y - 2)?", options: ["Нет", "Да"], correct: 0 },
-      { question: "Является ли тождеством равенство 6(x - y) = 6x - 6y?", options: ["Да", "Нет"], correct: 0 },
-      { question: "ЗАДАЧА (№ 90): Запишите в виде равенства утверждение: произведение любого числа и нуля равно нулю.", options: ["a · 0 = 0", "a + 0 = a", "a - 0 = a", "a / 0 = 0"], correct: 0 },
-      { question: "ЗАДАЧА: Запишите в виде равенства: квадрат любого положительного числа равен квадрату числа, ему противоположного.", options: ["a² = (-a)²", "a² = -a²", "a = -a", "a³ = (-a)³"], correct: 0 },
-      { question: "ЗАДАЧА: Докажите, что x + (-x) + y = y. Это тождество?", options: ["Да", "Нет"], correct: 0 }
+      { question: "Какое равенство называется тождеством?", options: ["Верное при любых значениях переменных", "Верное только при x=0", "Содержащее только числа", "Верное только при положительных x"], correct: 0 },
+      { question: "Является ли тождеством равенство a + 0 = a?", options: ["Да", "Нет", "Только для положительных a", "Только для целых a"], correct: 0 },
+      { question: "Является ли тождеством равенство x² - y² = (x - y)(x + y)?", options: ["Да", "Нет", "Только если x > 0", "Только если y > 0"], correct: 0 },
+      { question: "Какие выражения называются тождественно равными?", options: ["Значения которых равны при любых значениях переменных", "Которые имеют одинаковые буквы", "Которые равны нулю", "Которые содержат одинаковые числа"], correct: 0 },
+      { question: "Укажите тождественно равные выражения:", options: ["2(x + 3) и 2x + 6", "2x + 3 и 2x + 6", "x² и 2x", "3x и x + 3"], correct: 0 },
+      { question: "Тождественно равны ли выражения x · 1 и x?", options: ["Да", "Нет", "Только при x=1", "Только при x>0"], correct: 0 },
+      { question: "Запишите переместительное свойство умножения в виде тождества.", options: ["ab = ba", "a + b = b + a", "a(b + c) = ab + ac", "a · 0 = 0"], correct: 0 },
+      { question: "ЗАДАЧА: Докажите, что выражение (a + b) + c тождественно равно a + (b + c). Как называется это свойство?", options: ["Сочетательное свойство сложения", "Переместительное свойство", "Распределительное свойство", "Свойство нуля"], correct: 0 },
+      { question: "Является ли равенство 5x + 2x = 7x тождеством?", options: ["Да", "Нет", "Только при x=0", "Только при x>0"], correct: 0 },
+      { question: "ЗАДАЧА: Упростите выражение, используя свойства тождественных преобразований: 4(a - b).", options: ["4a - 4b", "4a - b", "a - 4b", "4ab"], correct: 0 }
     ]
   },
   {
     id: 5,
     title: "§ 5. Тождественные преобразования",
-    rule: "Замену одного выражения другим, тождественно равным ему выражением, называют тождественным преобразованием или просто преобразованием выражения. Тождественные преобразования выполняются на основе свойств действий над числами.",
+    rule: "Замену одного выражения другим, тождественно равным ему, называют тождественным преобразованием выражения. При тождественных преобразованиях используются свойства действий над числами.",
     example: {
-      task: "Рассмотрим примеры из учебника:",
+      task: "Примеры из учебника:",
       steps: [
-        "1) Приведем подобные слагаемые в сумме 5x + 2x - 3x: 5x + 2x - 3x = (5 + 2 - 3)x = 4x.",
-        "2) Раскроем скобки в выражении 2a + (b - 3c): 2a + (b - 3c) = 2a + b - 3c.",
-        "3) Раскроем скобки в выражении a - (4b - c): a - (4b - c) = a - 4b + c."
+        "Упростим выражение: 3(x + 2) - 2x.",
+        "1) Раскроем скобки: 3x + 6 - 2x.",
+        "2) Приведем подобные слагаемые: (3x - 2x) + 6.",
+        "3) Получим: x + 6. Мы выполнили тождественное преобразование."
       ]
     },
     quiz: [
-      { question: "Упростите, используя переместительное свойство: -6,2a · 5", options: ["-31a", "31a", "-1,24a", "11,2a"], correct: 0 },
-      { question: "Преобразуйте выражение: 7(x - y)", options: ["7x - 7y", "7x + 7y", "x - 7y", "7xy"], correct: 0 },
-      { question: "Приведите подобные слагаемые: 5a + 27a - a", options: ["31a", "32a", "33a", "28a"], correct: 0 },
-      { question: "Раскройте скобки: x + (b + c + d - m)", options: ["x + b + c + d - m", "x - b - c - d + m", "x + b - c + d - m", "x - b + c - d + m"], correct: 0 },
-      { question: "Раскройте скобки: a - (b - c - d)", options: ["a - b + c + d", "a - b - c - d", "a + b - c - d", "a + b + c + d"], correct: 0 },
-      { question: "Упростите выражение: 5 - (a - 3)", options: ["8 - a", "2 - a", "8 + a", "2 + a"], correct: 0 },
-      { question: "Раскройте скобки и приведите подобные: 3(6 - 5x) + 17x - 10", options: ["8 + 2x", "8 - 2x", "28 - 2x", "28 + 2x"], correct: 0 },
-      { question: "ЗАДАЧА (№ 112): Упростите выражение и найдите его значение: (6 - 2x) + (15 - 3x) при x = -0,2", options: ["22", "20", "24", "18"], correct: 0 },
-      { question: "ЗАДАЧА (№ 114): Докажите, что при любом a значение выражения 3(a+2) - 3a равно 6.", options: ["Тождество верно", "Тождество неверно"], correct: 0 },
-      { question: "ЗАДАЧА (№ 132): Упростите выражение: 0,4(7x - 2) - 1,6 + 1,7x", options: ["4,5x - 2,4", "4,5x + 2,4", "2,8x - 2,4", "2,8x + 2,4"], correct: 0 }
+      { question: "Что называют тождественным преобразованием?", options: ["Замену выражения тождественно равным", "Решение уравнения", "Нахождение значения выражения", "Удаление переменной"], correct: 0 },
+      { question: "Упростите выражение: 5x + 3 - 2x", options: ["3x + 3", "7x + 3", "3x - 3", "6x"], correct: 0 },
+      { question: "Упростите выражение: 2(a + 3) - 4", options: ["2a + 2", "2a + 6", "2a - 1", "a + 2"], correct: 0 },
+      { question: "Раскройте скобки и упростите: 3(2y - 1) + 4", options: ["6y + 1", "6y - 1", "6y + 3", "6y - 7"], correct: 0 },
+      { question: "Какое свойство использовано при переходе от 2x + 3x к 5x?", options: ["Распределительное", "Переместительное", "Сочетательное", "Основное свойство дроби"], correct: 0 },
+      { question: "Упростите: -2(x - 4)", options: ["-2x + 8", "-2x - 8", "-2x - 4", "2x + 8"], correct: 0 },
+      { question: "Выполните приведение подобных слагаемых: 4a - a + 5a", options: ["8a", "10a", "4a", "7a"], correct: 0 },
+      { question: "ЗАДАЧА: Упростите выражение 5(x + 2) - 3(x - 1) и найдите его значение при x = 2.", options: ["17", "15", "12", "20"], correct: 0 },
+      { question: "ЗАДАЧА: Упростите выражение: 7(2a - 1) - 3a", options: ["11a - 7", "11a + 7", "14a - 7", "11a - 1"], correct: 0 },
+      { question: "ЗАДАЧА: Найдите значение выражения 3(2x + 1) - 2(3x - 2) при x = 5.", options: ["7", "5", "12", "0"], correct: 0 }
     ]
   },
-    {
+  {
     id: 6,
     title: "§ 6. Уравнение и его корни",
     rule: "Равенства, содержащие переменную, называют уравнениями с одной переменной. Корнем уравнения называется значение переменной, при котором уравнение обращается в верное равенство. Решить уравнение — значит найти все его корни или доказать, что корней нет.",
@@ -212,7 +210,7 @@ const modules = [
       { question: "ЗАДАЧА (№ 167): В первой бригаде в 2 раза больше рабочих, чем во второй. В результате введения хозрасчета число рабочих первой бригады уменьшилось на 5 человек, а второй — на 2 человека. Сколько рабочих стало в каждой бригаде, если известно, что после этого в первой бригаде их оказалось на 7 больше, чем во второй?", options: ["Было 20 и 10, стало 15 и 8", "Было 30 и 15, стало 25 и 13", "Было 40 и 20, стало 35 и 18", "Было 10 и 5, стало 5 и 3"], correct: 0 }
     ]
   },
-      {
+  {
     id: 9,
     title: "§ 9. Что такое функция",
     rule: "Функцией называют такую зависимость переменной y от переменной x, при которой каждому значению x соответствует единственное значение y. Переменную x называют независимой переменной (аргументом), а y — зависимой переменной (значением функции).",
@@ -293,7 +291,7 @@ const modules = [
       { question: "Чтобы построить график функции по точкам, что нужно сделать в первую очередь?", options: ["Составить таблицу значений x и y", "Начертить оси координат", "Соединить точки", "Выбрать масштаб"], correct: 0 }
     ]
   },
-    {
+  {
     id: 12,
     title: "§ 12. Линейная функция и её график",
     rule: "Линейной функцией называется функция, которую можно задать формулой вида y = kx + b, где x — независимая переменная, k и b — некоторые числа. Графиком линейной функции является прямая.",
@@ -347,7 +345,7 @@ const modules = [
       { question: "Пересекаются ли графики функций y = 4 и y = x?", options: ["Да, в точке (4; 4)", "Нет", "Параллельны", "Совпадают"], correct: 0 }
     ]
   },
-    {
+  {
     id: 14,
     title: "§ 14. Функция y = x² и её график",
     rule: "Функция y = x² — это зависимость, при которой каждому значению x соответствует квадрат этого числа. Графиком функции y = x² является парабола, ветви которой направлены вверх, а вершина находится в начале координат (0; 0).",
@@ -403,7 +401,7 @@ const modules = [
       { question: "Как найти корни уравнения x² = 9 с помощью графика y = x²?", options: ["Найти точки пересечения параболы с прямой y=9", "Найти вершину", "Найти точки пересечения с осью Ox", "Найти точки пересечения с осью Oy"], correct: 0 }
     ]
   },
-    {
+  {
     id: 16,
     title: "§ 16. Что такое степень с натуральным показателем",
     rule: "Степенью числа a с натуральным показателем n, большим 1, называется произведение n множителей, каждый из которых равен a. Записывают: aⁿ. Число a называют основанием степени, а число n — показателем степени. a¹ = a.",
@@ -457,7 +455,7 @@ const modules = [
       { question: "ЗАДАЧА: Найдите значение выражения (2⁵ · 2³) : 2⁴", options: ["16", "8", "32", "64"], correct: 0 }
     ]
   },
-    {
+  {
     id: 18,
     title: "§ 18. Возведение в степень произведения и степени",
     rule: "При возведении в степень произведения каждый множитель возводят в эту степень: (ab)ⁿ = aⁿbⁿ. При возведении степени в степень основание оставляют прежним, а показатели перемножают: (aᵐ)ⁿ = aᵐⁿ.",
@@ -511,7 +509,7 @@ const modules = [
       { question: "Является ли выражение x + y одночленом?", options: ["Нет, это сумма", "Да", "Да, если x и y умножить", "Только если x=0"], correct: 0 }
     ]
   },
-    {
+  {
     id: 20,
     title: "§ 20. Умножение одночленов. Возведение одночлена в степень",
     rule: "Чтобы умножить одночлены, нужно перемножить их числовые коэффициенты и степени с одинаковыми основаниями. Чтобы возвести одночлен в степень, нужно возвести в эту степень каждый его множитель.",
@@ -566,7 +564,7 @@ const modules = [
       { question: "ЗАДАЧА: Периметр треугольника равен сумме его сторон. Найдите периметр, если стороны равны (2a + b), (a + 2b) и (3a - b).", options: ["6a + 2b", "6a + 4b", "5a + 2b", "6a - 2b"], correct: 0 }
     ]
   },
-    {
+  {
     id: 22,
     title: "§ 22. Умножение одночлена на многочлен",
     rule: "Чтобы умножить одночлен на многочлен, нужно умножить этот одночлен на каждый член многочлена и полученные произведения сложить.",
@@ -621,7 +619,7 @@ const modules = [
       { question: "ЗАДАЧА: Найдите общий множитель для выражения 12x²y - 18xy².", options: ["6xy", "6x²y²", "2xy", "3x²y"], correct: 0 }
     ]
   },
-    {
+  {
     id: 24,
     title: "§ 24. Умножение многочлена на многочлен",
     rule: "Чтобы умножить многочлен на многочлен, нужно каждый член одного многочлена умножить на каждый член другого многочлена и полученные произведения сложить.",
@@ -675,130 +673,144 @@ const modules = [
       { question: "ЗАДАЧА: Вычислите рациональным способом 15,6 · 3,2 + 15,6 · 6,8.", options: ["156", "15,6", "1560", "312"], correct: 0 },
       { question: "Разложите на множители: x³ + x² + x + 1", options: ["(x + 1)(x² + 1)", "(x - 1)(x² + 1)", "(x + 1)(x² - 1)", "(x + 1)(x + 1)"], correct: 0 }
     ]
-  },
-  ];
+  }
+];
 
 export default function App() {
   const [activeModule, setActiveModule] = useState(() => {
     const savedId = localStorage.getItem('algebra_active_topic');
     if (savedId) {
       const index = modules.findIndex(m => m.id === parseInt(savedId, 10));
-      return index !== -1 ? index : 0;
+      if (index !== -1) return index;
     }
     return 0;
   });
-  
-  const [selectedAnswers, setSelectedAnswers] = useState({});
-  const [showResult, setShowResult] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  useEffect(() => {
-    if (modules[activeModule]) {
-      localStorage.setItem('algebra_active_topic', modules[activeModule].id);
-    }
-  }, [activeModule]);
+  const [answers, setAnswers] = useState({});
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const currentMod = modules[activeModule];
 
-  if (!currentMod) return <div>Ошибка: Темы не найдены</div>;
-
-  const handleAnswer = (qIndex, oIndex) => {
-    setSelectedAnswers({ ...selectedAnswers, [qIndex]: oIndex });
+  const handleSelectModule = (index) => {
+    setActiveModule(index);
+    localStorage.setItem('algebra_active_topic', modules[index].id);
+    setAnswers({});
+    setIsMenuOpen(false);
+    window.scrollTo(0, 0);
   };
 
-  const checkQuiz = () => {
-    setShowResult(true);
+  const handleAnswer = (questionIndex, optionIndex) => {
+    setAnswers(prev => ({
+      ...prev,
+      [questionIndex]: optionIndex
+    }));
   };
 
   const calculateScore = () => {
     let score = 0;
-    currentMod.quiz.forEach((q, i) => {
-      if (selectedAnswers[i] === q.correct) score++;
+    currentMod.quiz.forEach((q, index) => {
+      if (answers[index] === q.correct) {
+        score++;
+      }
     });
     return score;
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 font-sans flex flex-col md:flex-row">
-      
-      <header className="md:hidden bg-slate-800 p-4 flex items-center justify-between border-b border-slate-700 sticky top-0 z-20">
-        <h1 className="text-lg font-bold text-blue-400 flex items-center gap-2">
-          <BookOpen size={20} /> Алгебра
-        </h1>
-        <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2 text-slate-300">
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+    <div className="min-h-screen bg-slate-900 text-slate-200 font-sans flex flex-col md:flex-row">
+      {/* Mobile Header */}
+      <div className="md:hidden flex items-center justify-between p-4 bg-slate-800 border-b border-slate-700 sticky top-0 z-20">
+        <div className="font-bold text-lg text-white">Алгебра 7 класс</div>
+        <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2">
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
-      </header>
+      </div>
 
-      <aside className={`w-64 bg-slate-800 p-4 border-r border-slate-700 flex-col gap-2 md:flex md:sticky md:top-0 md:h-screen overflow-y-auto transition-transform duration-300 ${isMobileMenuOpen ? 'flex fixed top-[60px] left-0 bottom-0 z-10' : 'hidden'}`}>
-        <h1 className="text-xl font-bold text-blue-400 mb-6 items-center gap-2 hidden md:flex">
-          <BookOpen size={24} /> Алгебра 7 класс
-        </h1>
-        <p className="text-xs text-slate-400 uppercase tracking-wider mb-2">Темы</p>
-        {modules.map((m, i) => (
-          <button
-            key={m.id}
-            onClick={() => { 
-              setActiveModule(i); 
-              setSelectedAnswers({}); 
-              setShowResult(false); 
-              window.scrollTo(0, 0);
-              setIsMobileMenuOpen(false);
-            }}
-            className={`text-left p-3 rounded-lg transition-colors ${activeModule === i ? 'bg-blue-600 text-white' : 'hover:bg-slate-700 text-slate-300'}`}
-          >
-            {m.title}
-          </button>
-        ))}
-      </aside>
-
-      <main className="flex-1 p-4 md:p-8 max-w-4xl mx-auto overflow-y-auto">
-        <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-white">{currentMod.title}</h2>
-
-        <div className="bg-slate-800 p-4 md:p-6 rounded-xl border-l-4 border-blue-500 mb-6 md:mb-8 shadow-lg">
-          <h3 className="text-lg font-semibold text-blue-400 mb-3">📖 Правило</h3>
-          <p className="text-slate-200 leading-relaxed text-base md:text-lg">{currentMod.rule}</p>
+      {/* Sidebar */}
+      <div className={`${isMenuOpen ? 'block' : 'hidden'} md:block w-full md:w-80 bg-slate-800 border-r border-slate-700 h-screen overflow-y-auto sticky top-0`}>
+        <div className="p-6 hidden md:block border-b border-slate-700">
+          <h1 className="text-xl font-bold text-white flex items-center gap-2">
+            <Award className="text-blue-500" />
+            Тренажер по Алгебре
+          </h1>
+          <p className="text-sm text-slate-400 mt-2">По учебнику Макарычева</p>
         </div>
-
-        <div className="bg-slate-800 p-4 md:p-6 rounded-xl mb-6 md:mb-8 border border-slate-700">
-          <h3 className="text-lg font-semibold text-green-400 mb-3">💡 Разобранный пример</h3>
-          <p className="text-base md:text-xl font-mono mb-4 bg-slate-900 p-3 rounded inline-block whitespace-pre-wrap">{currentMod.example.task}</p>
-          <ul className="space-y-2 text-slate-300">
-            {currentMod.example.steps.map((step, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm md:text-base">
-                <CheckCircle size={18} className="text-green-500 mt-0.5 shrink-0" />
-                <span>{step}</span>
-              </li>
-            ))}
-          </ul>
+        <div className="p-4 space-y-2">
+          {modules.map((mod, index) => (
+            <button
+              key={mod.id}
+              onClick={() => handleSelectModule(index)}
+              className={`w-full text-left px-4 py-3 rounded-xl transition-all duration-200 flex items-center gap-3 ${
+                activeModule === index
+                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/50'
+                  : 'hover:bg-slate-700/50 text-slate-300'
+              }`}
+            >
+              <Circle size={12} className={activeModule === index ? 'fill-white' : 'fill-slate-500'} />
+              <span className="font-medium text-sm leading-tight">{mod.title}</span>
+            </button>
+          ))}
         </div>
+      </div>
 
-        <div className="bg-slate-800 p-4 md:p-6 rounded-xl border border-slate-700 mb-12">
-          <h3 className="text-lg font-semibold text-yellow-400 mb-4">📝 Проверь себя</h3>
+      {/* Main Content */}
+      <div className="flex-1 p-6 md:p-10 max-w-4xl mx-auto w-full">
+        <div className="mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+            {currentMod.title}
+          </h2>
           
+          <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700 mb-6">
+            <h3 className="text-blue-400 font-semibold mb-2">Правило:</h3>
+            <p className="text-slate-300 leading-relaxed">{currentMod.rule}</p>
+          </div>
+
+          <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700 mb-8">
+            <h3 className="text-emerald-400 font-semibold mb-4">{currentMod.example.task}</h3>
+            <ul className="space-y-3">
+              {currentMod.example.steps.map((step, idx) => (
+                <li key={idx} className="text-slate-300 flex gap-3">
+                  <span className="text-emerald-500 font-bold mt-0.5">•</span>
+                  <span className="leading-relaxed">{step}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="space-y-6 pb-20">
+          <h3 className="text-xl font-bold text-white mb-4 border-b border-slate-700 pb-2">Проверь себя</h3>
           {currentMod.quiz.map((q, qIndex) => (
-            <div key={qIndex} className="mb-6">
-              <p className="text-base md:text-lg mb-3 text-white font-medium">{qIndex + 1}. {q.question}</p>
+            <div key={qIndex} className="bg-slate-800 rounded-2xl p-6 border border-slate-700">
+              <p className="text-lg font-medium text-white mb-4">
+                {qIndex + 1}. {q.question}
+              </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {q.options.map((opt, oIndex) => {
-                  const isSelected = selectedAnswers[qIndex] === oIndex;
-                  const isCorrect = q.correct === oIndex;
+                {q.options.map((opt, optIndex) => {
+                  const isSelected = answers[qIndex] === optIndex;
+                  const isCorrect = optIndex === q.correct;
+                  const hasAnswered = answers[qIndex] !== undefined;
+
+                  let btnClass = "bg-slate-700 hover:bg-slate-600 text-slate-200 border-slate-600";
                   
-                  let btnClass = "p-3 rounded-lg border text-left transition-all text-sm md:text-base ";
-                  if (!showResult) {
-                    btnClass += isSelected ? "bg-blue-600 border-blue-500 text-white" : "bg-slate-700 border-slate-600 hover:bg-slate-600";
-                  } else {
-                    if (isCorrect) btnClass += "bg-green-600/20 border-green-500 text-green-400";
-                    else if (isSelected && !isCorrect) btnClass += "bg-red-600/20 border-red-500 text-red-400";
-                    else btnClass += "bg-slate-700 border-slate-600 opacity-50";
+                  if (hasAnswered) {
+                    if (isSelected && isCorrect) {
+                      btnClass = "bg-emerald-600/20 border-emerald-500 text-emerald-400";
+                    } else if (isSelected && !isCorrect) {
+                      btnClass = "bg-red-600/20 border-red-500 text-red-400";
+                    } else if (isCorrect) {
+                      btnClass = "bg-emerald-600/20 border-emerald-500/50 text-emerald-400/50";
+                    } else {
+                      btnClass = "bg-slate-800 border-slate-700 text-slate-500 opacity-50";
+                    }
                   }
 
                   return (
                     <button
-                      key={oIndex}
-                      disabled={showResult}
-                      onClick={() => handleAnswer(qIndex, oIndex)}
-                      className={btnClass}
+                      key={optIndex}
+                      onClick={() => handleAnswer(qIndex, optIndex)}
+                      disabled={hasAnswered}
+                      className={`px-4 py-3 rounded-xl border text-left transition-all duration-200 ${btnClass}`}
                     >
                       {opt}
                     </button>
@@ -807,24 +819,23 @@ export default function App() {
               </div>
             </div>
           ))}
+        </div>
 
-          {!showResult ? (
-            <button onClick={checkQuiz} className="mt-4 bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-lg transition-colors w-full">
-              Проверить ответы
-            </button>
-          ) : (
-            <div className="mt-6 p-4 bg-slate-900 rounded-lg flex flex-col md:flex-row items-start md:items-center gap-4 border border-slate-700">
+        {/* Results */}
+        <div className="fixed bottom-0 left-0 md:left-80 right-0 bg-slate-800/90 backdrop-blur border-t border-slate-700 p-4">
+          <div className="max-w-4xl mx-auto flex items-center justify-between">
+            <div className="flex items-center gap-4">
               <Award size={32} className="text-yellow-400 shrink-0" />
               <div>
                 <p className="text-lg md:text-xl font-bold text-white">Твой результат: {calculateScore()} из {currentMod.quiz.length}</p>
                 <p className="text-slate-400 text-sm md:text-base">
-                  {calculateScore() === currentMod.quiz.length ? "Идеально! Тема усвоена." : "Есть над чем поработать. Перечитай правило и попробуй снова."}
+                  {calculateScore() === currentMod.quiz.length ? "Идеально! Тема усвоена." : "Есть над чем поработать. Перечитай правило и примеры."}
                 </p>
               </div>
             </div>
-          )}
+          </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 }
